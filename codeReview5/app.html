@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <style>
+    #header {
+        background-image: url('cloud.jpeg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 250px;
+    }
+
+    #header p {
+        height: 50px;
+        font-size: 15pt;
+        border-radius: 4px;
+    }
+
+    #inputValues {
+        background-color: lightskyblue;
+        height: 70px;
+    }
+
+    input[type=text] {
+        border: 2px solid blue;
+        border-radius: 4px;
+        width: 400px;
+        margin-top: 17px;
+    }
+
+    input[type=number] {
+        border: 2px solid blue;
+        border-radius: 4px;
+        margin-top: 17px;
+    }
+
+    .submitBtn {
+        background-color: lightblue;
+        border-radius: 4px;
+    }
+
+    #totalIncome {
+        background-color: green;
+        margin-right: 15px;
+    }
+
+    #totalExpens {
+        background-color: red;
+        margin-right: 15px;
+    }
+
+    .dropdown {
+        margin-left: 300px;
+        margin-top: 17px;
+    }
+
+    th {
+        font-size: 20pt;
+    }
+
+    td {
+        font-size: 14pt;
+        color: grey;
+        font-weight: bold;
+    }
+    </style>
+    <div class='container-fluid'>
+        <div class='row' id='header'>
+            <div class='col-md-4 col-md-offset-4'>
+                <p id="date">Available Budget</p>
+                <p id="total">0</p>
+                <p id="totalIncome">0</p>
+                <p id="totalExpens">0</p>
+            </div>
+        </div>
+        <div class='row' id='inputValues'>
+            <div class="dropdown col-md-2 col-sm-1">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chose an action
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" id='dropdown'>
+                    <li><a href='#'>Income</a></li>
+                    <li><a href='#'>Expens</a></li>
+                </ul>
+            </div>
+            <div class='col-md-6 col-sm-3'>
+                <input type='text' id='inputText' placeholder='Discribe action'>
+                <input type='number' id='inputNumber' placeholder='Price of action'>
+                <button type="submit" class='submitBtn' onclick='placeData()'>submit</button>
+            </div>
+        </div>
+        <div class='row' id='outputValues'>
+            <div class='col-md-5'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style='color:green'>INCOME</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        <tr>
+                            <td id='textIncome'></td>
+                            <td id='priceIncome'></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class='col-md-5 col-md-offset-1'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style='color:red'>EXPENS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable1">
+                        <tr>
+                            <td id='textExpens'></td>
+                            <td id='priceExpens'></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(".dropdown-menu li a").click(function() {
+        // remove previously added selectedLi
+        $('.selectedLi').removeClass('selectedLi');
+        // add class `selectedLi`
+        $(this).addClass('selectedLi');
+        var dropDown = $(this).text(); ///User selected value...****
+        $(this).parents('.btn-group').find('.dropdown-toggle').html(dropDown +
+            ' <span class="caret"></span>');
+    });
+
+
+
+
+    function placeData() {
+        var dropDown = $('.dropdown-menu li a.selectedLi').text();
+        var text = document.getElementById('inputText').value;
+        var price = document.getElementById('inputNumber').value;
+        var sumIncome = +price;
+        var sumExpense = +price;
+
+        //console.log(dropDown,text,price);
+        try {
+            if (dropDown === "Income") {
+                var table = document.getElementById("myTable");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+
+                cell1.innerHTML = text;
+                cell2.innerHTML = price;
+
+
+
+                document.getElementById('totalIncome').innerHTML = sumIncome;
+
+
+
+            } else {
+                var table = document.getElementById("myTable1");
+                var row = table.insertRow(0);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = text;
+                cell2.innerHTML = price;
+
+                document.getElementById('totalExpens').innerHTML = sumExpense;
+            };
+            var sumTotal = sumIncome - sumExpense;
+            document.getElementById('total').innerHTML = sumTotal;
+        } catch (sumTotal) {
+            alert('Please chech if all fields filled out');
+        }
+    }
+    </script>
+</body>
+
+</html>
